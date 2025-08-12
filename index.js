@@ -21,7 +21,7 @@
 // How to create a grid using flexbox
 // How to change the color of the div
 
-function createBlock(blocksPerSide) {
+function createBlock(blocksPerSide=10) {
     for (let i = 0; i < blocksPerSide; ++i){
         let container = document.querySelector("div.container")
         let row = document.createElement("div")
@@ -30,11 +30,33 @@ function createBlock(blocksPerSide) {
         for (let j = 0; j < blocksPerSide; ++j){
             let singleBlock = document.createElement("div")
             singleBlock.setAttribute("style",
-                "background-color: blue; height:16px;width:16px; border: solid 3px; flex: 1 0 0;")
+                "background-color: blue; height:16px;width:16px; flex: 1 0 0;")
+            singleBlock.addEventListener("mouseover", (event) => {
+                singleBlock.style.backgroundColor="green"
+            })
             row.appendChild(singleBlock)
         }
         container.appendChild(row)
     }
 }
 
-createBlock(10)
+function createSketchpad() {
+    let sketchpadSizeButton = document.createElement("button")
+    sketchpadSizeButton.textContent = "Set Sketchpad Size"
+    let body = document.querySelector("body")
+    let container = document.querySelector("div.container")
+    body.appendChild(sketchpadSizeButton)
+    let sketchpasSize;
+    sketchpadSizeButton.addEventListener("click", (event) => {
+        let body = document.querySelector("body")
+        sketchpasSize = prompt("Please enter the size of the sketchpad you wish for:")
+        body.removeChild(document.querySelector("div.container"))
+        let newContainer = document.createElement("div")
+        newContainer.classList.add("container")
+        body.appendChild(newContainer)
+        createBlock(sketchpasSize)
+    })
+    
+}
+
+createSketchpad()

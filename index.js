@@ -20,7 +20,9 @@
 // Key challenges:
 // How to create a grid using flexbox
 // How to change the color of the div
-let currentColor="red"
+let currentColor = "rgba(255,0,0,1)"
+let rainbow = false
+let darken=true
 function createBlock(blocksPerSide=10) {
     for (let i = 0; i < blocksPerSide; ++i){
         let container = document.querySelector("div.container")
@@ -33,7 +35,26 @@ function createBlock(blocksPerSide=10) {
             singleBlock.setAttribute("style",
                 `background-color: white; height:${pixelSize}px;width:${pixelSize}px; flex: 1 0 0;`)
             singleBlock.addEventListener("mouseover", (event) => {
-                singleBlock.style.backgroundColor=currentColor
+                if (!rainbow && !darken) {
+                    singleBlock.style.backgroundColor=currentColor
+                }
+                else if(rainbow)
+                { singleBlock.style.backgroundColor = generateRandomColor() }
+                else if (darken) {
+                    let splitColor = currentColor.split(",")
+                    let alpha = (splitColor[3].split(")"))[0]
+                    console.log(alpha,"before changing alpha")
+                    alpha = parseFloat(alpha)
+                    if (alpha < 1) {
+                      alpha=alpha+0.1
+                    } else {
+                        alpha=0
+                    }
+                    console.log(alpha,"after changing alpha")
+                    currentColor = `${splitColor[0]},${splitColor[1]},${splitColor[2]},${alpha})`
+                    console.log(currentColor)
+                    singleBlock.style.backgroundColor=currentColor
+                }
             })
             row.appendChild(singleBlock)
         }
@@ -62,7 +83,7 @@ function createSketchpad() {
         // create a pallete for choosing colors to write on the sketchpad
         let pallete = document.createElement("div")
         pallete.classList.add("row")
-        let colors = ["green", "red", "blue", "orange", "yellow", "purple"]
+        let colors = ["rgba(13, 233, 57, 1)", "rgba(255, 60, 0, 1)", "rgba(3, 132, 253, 1)", "rgba(247, 255, 22, 1)", "rgba(255, 166, 0, 1)", "rgba(162, 0, 255, 1)"]
         for (let color of colors) {
             
             let colorInPallete = document.createElement("div")
@@ -70,11 +91,37 @@ function createSketchpad() {
                 `background-color: ${color}; height:16px;width:16px; flex: 1 0 0; 
                     margin-top:10px; margin-right:10px;`)
             colorInPallete.addEventListener("click", () => {
-                currentColor=color
+                currentColor = color
+                darken = false
+                rainbow=false
             })
             pallete.appendChild(colorInPallete)
         }
         
+        let rainbowDiv = document.createElement("div")
+        
+        rainbowDiv.setAttribute("style",
+                `background-color: ${currentColor}; height:16px;width:16px; flex: 1 0 0; 
+                    margin-top:10px; margin-right:10px;`)
+        rainbowDiv.addEventListener("click", () => {
+            rainbow = true
+            darken=false
+        })
+        rainbowDiv.classList.add("rainbow")
+        pallete.appendChild(rainbowDiv)
+
+         let darkenDiv = document.createElement("div")
+        
+        darkenDiv.setAttribute("style",
+                `background-color: rgba(255,0,0,0.1); height:16px;width:16px; flex: 1 0 0; 
+                    margin-top:10px; margin-right:10px;`)
+        darkenDiv.addEventListener("click", () => {
+            rainbow = false
+            darken=true
+        })
+        darkenDiv.classList.add("rainbow")
+        pallete.appendChild(darkenDiv)
+
         createBlock(sketchpasSize)
         newContainer.appendChild(pallete)
     }
@@ -83,4 +130,15 @@ function createSketchpad() {
     
 }
 
+function generateRandomColor() {
+    return `rgba(${Math.floor(Math.random() * 255)}
+    ,${Math.floor(Math.random() * 255)}
+    ,${Math.floor(Math.random() * 255)}
+    ,${1})`
+}
+
+setInterval(function () {
+            let rainbowDiv = document.querySelector(".rainbow")
+            rainbowDiv.style.backgroundColor=generateRandomColor()
+        },100)
 createSketchpad()

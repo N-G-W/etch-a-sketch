@@ -1,11 +1,11 @@
 /* container for the sketchpad that contains 
 alot of 16 by 16 divs */
 div.container{
-    margin: 10% auto;
-    padding: 0px;
-    /* width: 500px;
-    height: 500px; */
-    background-color: grey;
+    margin: 5% auto;
+    padding: 5%;
+    width: 600px;
+    height: 600px;
+    background-color: rgb(232, 232, 232);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -13,8 +13,9 @@ div.container{
 
 /* there should be a generic list of classes of
 colors for the skethpad div to change into */
-
-.green{
+/* changed this part to use background-color of each div in javascript code
+no need for this section now */
+/* .green{
     background-color: green;
 }
 
@@ -36,7 +37,7 @@ colors for the skethpad div to change into */
 
 .purple{
     background-color: purple;
-}
+} */
 
 /* since we are making a grid, it makes sense at least 
 for me to have a row and colum container, it will be 
@@ -50,3 +51,17 @@ easier to use the flex properties to easily manage the grid */
 }
 /* on second thought there is no need to create a column
 container we can just use the container defined at the top */
+
+/* style for the button that sets the sketchpad size */
+.sketchpad{
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    color: white;
+    background-color: rgb(78, 134, 237);
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    border: none;
+}

@@ -3,10 +3,11 @@ alot of 16 by 16 divs */
 div.container{
     margin: 10% auto;
     padding: 0px;
-    width: 500px;
-    height: 500px;
+    /* width: 500px;
+    height: 500px; */
     background-color: grey;
     display: flex;
+    align-items: center;
     flex-direction: column;
 }
 

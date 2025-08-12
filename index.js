@@ -21,3 +21,20 @@
 // How to create a grid using flexbox
 // How to change the color of the div
 
+function createBlock(blocksPerSide) {
+    for (let i = 0; i < blocksPerSide; ++i){
+        let container = document.querySelector("div.container")
+        let row = document.createElement("div")
+        row.classList.add("row")
+        
+        for (let j = 0; j < blocksPerSide; ++j){
+            let singleBlock = document.createElement("div")
+            singleBlock.setAttribute("style",
+                "background-color: blue; height:16px;width:16px; border: solid 3px; flex: 1 0 0;")
+            row.appendChild(singleBlock)
+        }
+        container.appendChild(row)
+    }
+}
+
+createBlock(10)
